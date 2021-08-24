@@ -1,82 +1,85 @@
-import Head from 'next/head'
+import Head from "next/head";
+import Avatar from "../comps/Avatar";
+import { MicrophoneIcon, ViewGridIcon } from "@heroicons/react/solid";
+import { SearchIcon } from "@heroicons/react/outline";
+import Image from "next/image";
+import Footer from "../comps/Footer";
+import { useRef } from "react";
+import { useRouter } from "next/dist/client/router";
 
 export default function Home() {
+  const router = useRouter();
+  const ref = useRef(null);
+  const search = (e) => {
+    e.preventDefault();
+    const term = ref.current.value;
+    if (!term) return;
+    router.push(`/search?term=${term}`);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center h-screen ">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Google</title>
       </Head>
-
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      {/* header */}
+      <header className="flex  p-5 justify-between w-full text-sm text-gray-700">
+        {/* left */}
+        <div className="flex space-x-4 items-center">
+          <p className="link">About</p>
+          <p className="link">Store</p>
         </div>
-      </main>
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* right */}
+        <div className="flex space-x-4 items-center">
+          <p className="link"> Gmail</p>
+          <p className="link">Images</p>
+
+          <ViewGridIcon className="h-10 w-10 p-2 rounded-full hover:bg-gray-100 cursor-pointer" />
+
+          <Avatar url="https://yt3.ggpht.com/yti/APfAmoFqezjORcDBXJ65yLmhPd3bvjS1fsR4yA6QJqUXXg=s88-c-k-c0x00ffffff-no-rj-mo" />
+        </div>
+      </header>
+      {/* body */}
+      <form className="flex flex-col items-center mt-44 flex-grow w-4/5">
+        <Image
+          src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_160x56dp.png"
+          height="100"
+          width="300"
+        />
+        <div
+          className="flex w-full mt-5 hover:shadow-lg focus-within:shadow-lg max-w-md rounded-full border border-gray-200
+        px-5 py-3 items-center
+        sm:max-w-xl
+        lg:max-w-2xl
+        "
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+          <SearchIcon className="h-5 mr-3 text-gray-500" />
+          <input
+            type="text"
+            className="focus:outline-none flex-grow "
+            ref={ref}
+          />
+          <MicrophoneIcon className="h-5" />
+        </div>
+        <div className="flex flex-col w-1/2 space-y-2 justify-center mt-8 sm:space-y-0 sm:flex-row sm:space-x-4">
+          <button
+            className="btn p-3 rounded-md ring-gray-200 text-sm text-gray-800 hover:ring-1 focus:outline-none active:ring-gray-300 hover:shadow-md"
+            onClick={search}
+          >
+            Google Search
+          </button>
+          <button
+            className="btn p-3 rounded-md ring-gray-200 text-sm text-gray-800 hover:ring-1 focus:outline-none active:ring-gray-300 hover:shadow-md"
+            onClick={search}
+          >
+            I'm Feeling LuckyclassName
+          </button>
+        </div>
+      </form>
+
+      {/* footer */}
+      <Footer />
     </div>
-  )
+  );
 }
